@@ -38,13 +38,12 @@ jobs:
         with:
           context: ./
           file: ./Dockerfile
-          target: build
           push: true
           tags: ghcr.io/${{ github.repository }}:latest
           cache-from: |
-            type=gha,scope=build
+            type=gha
           cache-to: |
-            type=gha,scope=build,mode=max
+            type=gha,mode=max
 
       - name: Tag the commit
         run: |
