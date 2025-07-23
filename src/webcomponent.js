@@ -43,7 +43,7 @@ class Webring18F extends HTMLElement {
 </svg>
       </div>
       <div style="grid-column: 2 / span 2">
-        <span><b>This website is part of the 18F web ring.</b></span>
+        <span>This website is part of the 18F web ring.</span>
       </div>
       <div>
         <a href="https://webring.18f.org/previous?from=${from}"
