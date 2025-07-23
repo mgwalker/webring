@@ -45,11 +45,6 @@ jobs:
           cache-to: |
             type=gha,mode=max
 
-      - name: Tag the commit
-        run: |
-          git tag latest
-          git push origin tag 18f
-
       # Generate artifacte attestation for evidence of how it was built
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
