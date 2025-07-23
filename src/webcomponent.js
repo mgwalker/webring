@@ -13,12 +13,13 @@ class Webring18F extends HTMLElement {
       "style",
       `display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        max-width: 300px;
-        border: black 0.1rem inset;
-        padding: 0.2rem;
+        max-width: 14rem;
+        border: #ddd 2px groove;
+        padding: 0.7rem;
         text-align: center;
         background: white;
-        border-style: outset;`,
+        font-size:0.7rem;
+        align-items: center;`,
     );
 
     outer.innerHTML = `<div>
@@ -46,7 +47,7 @@ class Webring18F extends HTMLElement {
       </div>
       <div>
         <a href="https://webring.18f.org/previous?from=${from}"
-          >previous</a
+          >« previous</a
         >
       </div>
       <div>
@@ -58,7 +59,7 @@ class Webring18F extends HTMLElement {
         <a
           id="18f_webring__next"
           href="https://webring.18f.org/next?from=${from}"
-          >next</a
+          >next »</a
         >
       </div>`;
     shadowRoot.appendChild(outer);
