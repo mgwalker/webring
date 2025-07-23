@@ -1,6 +1,5 @@
 class Webring18F extends HTMLElement {
-  constructor() {
-    super();
+  connectedCallback() {
     const from = this.getAttribute("from");
     if (!from) {
       console.error("The from attribute must be set on webring-18f.");
