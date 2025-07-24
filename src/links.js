@@ -29,7 +29,9 @@ const home = {
 };
 
 export const initCache = async () => {
-  const linkData = await fetch(LINK_SRC).then((r) => r.json());
+  const linkData = await fetch(LINK_SRC)
+    .then((r) => r.json())
+    .then((links) => links.filter(({ url }) => url !== HOME_URL));
 
   for (let i = 0; i < linkData.length; i += 1) {
     const previous = i === 0 ? linkData[linkData.length - 1] : linkData[i - 1];
