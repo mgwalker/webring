@@ -1,3 +1,5 @@
+import fs from "node:fs/promises";
+import path from "node:path";
 const links = new Map();
 
 const LINK_SRC = process.env.LINK_SRC;
@@ -38,6 +40,21 @@ export const initCache = async () => {
     const next = i === linkData.length - 1 ? linkData[0] : linkData[i + 1];
     links.set(linkData[i].url, { next, previous });
   }
+
+  const index = await fs.readFile(
+    path.join(import.meta.dirname, "index.html"),
+    { encoding: "utf-8" },
+  );
+
+  const updatedIndex = index.replace(
+    /<!-- start -->.*?<!-- end -->/,
+    `<!-- start -->${linkData.map(({ url, text }) => `<li><a href="${url}">${text}</a>`).join("")}<!-- end -->`,
+  );
+
+  await fs.writeFile(
+    path.join(import.meta.dirname, "index.html"),
+    updatedIndex,
+  );
 
   // Update cache every ten minutes
   setTimeout(initCache, 600_000);

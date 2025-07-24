@@ -42,6 +42,15 @@ const main = async () => {
     );
   });
 
+  const serveRoot = async (_, response) => {
+    response.header("Content-Type", "text/html");
+    response.send(
+      await fs.readFile(path.join(import.meta.dirname, "index.html")),
+    );
+  };
+  server.get("/", serveRoot);
+  server.get("/index.html", serveRoot);
+
   await server.listen({ port, host: "0.0.0.0" });
   console.log(`listening on port ${port}`);
 
