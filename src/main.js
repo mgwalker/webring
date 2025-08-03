@@ -1,10 +1,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import fastify from "fastify";
-import { initCache, getLink, getRandom } from "./links.js";
 
 const main = async () => {
-  await initCache();
   const port = process.env.PORT || 8080;
   const server = fastify();
 
@@ -20,21 +18,6 @@ const main = async () => {
     process.exit(1);
   });
 
-  server.get("/next", (request, response) => {
-    const links = getLink(request.query.from);
-    response.redirect(links.next.url, 302);
-  });
-
-  server.get("/previous", (request, response) => {
-    const links = getLink(request.query.from);
-    response.redirect(links.previous.url, 302);
-  });
-
-  server.get("/random", (_, response) => {
-    const links = getRandom();
-    response.redirect(links.previous.url, 302);
-  });
-
   server.get("/webcomponent.js", async (_, response) => {
     response.header("Content-Type", "text/javascript");
     response.send(
@@ -42,14 +25,10 @@ const main = async () => {
     );
   });
 
-  const serveRoot = async (_, response) => {
-    response.header("Content-Type", "text/html");
-    response.send(
-      await fs.readFile(path.join(import.meta.dirname, "index.html")),
-    );
-  };
-  server.get("/", serveRoot);
-  server.get("/index.html", serveRoot);
+  server.get("*", (_, response) => {
+    response.status(204);
+    response.send();
+  });
 
   await server.listen({ port, host: "0.0.0.0" });
   console.log(`listening on port ${port}`);
